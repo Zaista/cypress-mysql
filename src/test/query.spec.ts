@@ -21,7 +21,7 @@ describe('Query tests', () => {
         } else {
           throw err;
         }
-      }
+      },
     );
 
     const drop_table_sql = 'drop table if exists query';
@@ -197,7 +197,7 @@ describe('Query tests', () => {
     await execute_query({ db: default_args.db, sql: select_sql }).then(
       (res: any) => {
         assert.deepStrictEqual(res, [{ str_column: 'updated insert' }]);
-      }
+      },
     );
   });
 
@@ -212,7 +212,7 @@ describe('Query tests', () => {
     await execute_query({ db: default_args.db, sql, values }).then(
       (res: any) => {
         assert.strictEqual(res.affectedRows, 2);
-      }
+      },
     );
     await execute_query(default_args).then((res: any) => {
       assert.strictEqual(res.length, 6);
@@ -228,7 +228,7 @@ describe('Query tests', () => {
     await execute_query({ db: default_args.db, sql: select_sql }).then(
       (res: any) => {
         assert.deepStrictEqual(res, []);
-      }
+      },
     );
   });
 
