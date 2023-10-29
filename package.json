@@ -31,8 +31,7 @@
     "dist/index.d.ts"
   ],
   "dependencies": {
-    "mysql2": "3.6.2",
-    "rimraf": "^5.0.5"
+    "mysql2": "3.6.2"
   },
   "peerDependencies": {
     "cypress": ">=12"
@@ -42,6 +41,7 @@
     "@types/node": "20.8.9",
     "mocha": "10.2.0",
     "prettier": "3.0.3",
+    "rimraf": "^5.0.5",
     "typescript": "5.2.2"
   }
 }
