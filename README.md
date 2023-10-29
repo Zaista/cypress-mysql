@@ -10,7 +10,7 @@ profit
 
 # Usage
 
-```
+``` javascript
 const sql = 'select * from some_table';
 cy.query(sql).then(res => {
   cy.log(res); // outputs json array of selected rows 
@@ -21,42 +21,46 @@ const values = [[[1, 'a'], [2, 'b'], [3, 'c']]]; // yes, it's three square brack
 cy.query(sql, values).then(res => {
   cy.log(res.affectedRows); // outputs 3
 });
+```
 
 Supported commands:
-    create database
-    create/drop table
-    any kind of select/join/insert/delete statetments
-```
+ - create database
+ - create/drop table
+ - any kind of select/join/insert/delete statetments
 
 # Environment setup
 
-Add the following `env` properties in your `cypress.json` file:
-```
-  "env": {
-    "db": {
-      "host": "localhost",
-      "user": "user",
-      "password": "password",
-      "database": "database"
-    }
-  }
+Add the following `env` properties in your `cypress.confing.js` file:
+``` javascript
 ```
 
 # Plugin configuration - JavaScript
 
-In your `cypress/plugins/index.js` add the following:
+In your `cypress.config.js` add the following:
 
-```
+``` javascript
 const mysql = require('cypress-mysql');
 
-module.exports = (on, config) => {
-  mysql.configurePlugin(on);
-}
+module.exports = defineConfig({
+    e2e: {
+        env: {
+            db: {
+                host: 'localhost',
+                user: 'cypress',
+                password: 'cypress',
+                database: 'cypress'
+            },
+        },
+        async setupNodeEvents(on, config) {
+            mysql.configurePlugin(on);
+        },
+    },
+});
 ```
 
-In your `cypress/support/index.js` add the following:
+In your `cypress/support/e2e.js` add the following:
 
-```
+``` javascript
 const mysql = require('cypress-mysql');
 mysql.addCommands();
 ```
@@ -64,23 +68,32 @@ mysql.addCommands();
 
 # Plugin configuration - TypeScript
 
-In your `cypress/plugins/index.ts` add the following:
+In your `cypress.config.ts` add the following:
 
-```
+``` typescript
 import * as mysql from 'cypress-mysql';
 
-/**
- * @type {Cypress.PluginConfig}
- */
-export default (on: Cypress.PluginEvents, config: Cypress.PluginConfigOptions) => {
-    mysql.configurePlugin(on);
-}
+const defineConfig({
+    e2e: {
+        env: {
+            db: {
+                host: 'localhost',
+                user: 'cypress',
+                password: 'cypress',
+                database: 'cypress'
+            },
+        },
+        setupNodeEvents(on, config) {
+            mysql.configurePlugin(on);
+        },
+    },
+)}
 ```
 
-In your `cypress/support/index.ts` add the following:
+In your `cypress/support/e2e.ts` add the following:
 
-```
-import * as mysql from "cypress-mysql";
+``` typescript
+import * as mysql from 'cypress-mysql';
 mysql.addCommands();
 ```
 

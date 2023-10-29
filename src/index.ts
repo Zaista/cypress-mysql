@@ -40,7 +40,7 @@ function query(sql: string, values?: Array<any>): Chainable {
   let args: MySQLDetails = {
     db: Cypress.env('db'),
     sql: sql,
-    values
+    values,
   };
 
   validateDetails(args);
