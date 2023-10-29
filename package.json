@@ -8,7 +8,7 @@
     "test": "mocha ./dist/test/*.spec.js",
     "prebuild": "npx prettier --write src/",
     "build": "tsc -d",
-    "preversion": "npm rimraf dist && npm run build && npm run test"
+    "preversion": "rimraf dist && npm run build && npm run test"
   },
   "keywords": [
     "cypress",
