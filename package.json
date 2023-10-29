@@ -31,7 +31,8 @@
     "dist/index.d.ts"
   ],
   "dependencies": {
-    "mysql2": "3.6.2"
+    "mysql2": "3.6.2",
+    "rimraf": "^5.0.5"
   },
   "peerDependencies": {
     "cypress": ">=12"
