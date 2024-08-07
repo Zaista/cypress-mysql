@@ -1,12 +1,12 @@
 {
   "name": "cypress-mysql",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "Cypress MySQL plugin",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
     "test": "mocha ./dist/test/*.spec.js",
-    "prebuild": "npx prettier --write src/",
+    "prebuild": "rimraf dist && npx prettier --write src/",
     "build": "tsc -d",
     "preversion": "rimraf dist && npm run build && npm run test"
   },
@@ -31,17 +31,17 @@
     "dist/index.d.ts"
   ],
   "dependencies": {
-    "mysql2": "3.6.2"
+    "mysql2": "3.11.0"
   },
   "peerDependencies": {
     "cypress": ">=12"
   },
   "devDependencies": {
-    "@types/mocha": "10.0.3",
-    "@types/node": "20.8.9",
-    "mocha": "10.2.0",
-    "prettier": "3.0.3",
-    "rimraf": "^5.0.5",
-    "typescript": "5.2.2"
+    "@types/mocha": "10.0.7",
+    "@types/node": "22.1.0",
+    "mocha": "10.7.0",
+    "prettier": "3.3.3",
+    "rimraf": "^6.0.1",
+    "typescript": "5.5.4"
   }
 }
