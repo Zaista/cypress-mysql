@@ -5,6 +5,7 @@ declare global {
   namespace Cypress {
     interface Chainable<Subject = any> {
       query(sql: string, values?: Array<any>): Chainable<Subject>;
+      env(key: string): Chainable<any>;
     }
   }
 }
@@ -37,16 +38,18 @@ export const addCommands = async () => {
 };
 
 function query(sql: string, values?: Array<any>): Chainable {
-  let args: MySQLDetails = {
-    db: Cypress.env('db'),
-    sql: sql,
-    values,
-  };
+  return cy.env('db').then((db: MySQLDetails['db']) => {
+    const args: MySQLDetails = {
+      db,
+      sql,
+      values,
+    };
 
-  validateDetails(args);
+    validateDetails(args);
 
-  return cy.task('query', args).then((result: any) => {
-    return result;
+    return cy.task('query', args).then((result: any) => {
+      return result;
+    });
   });
 }
 

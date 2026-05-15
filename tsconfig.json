@@ -1,10 +1,11 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es2022",
     "lib": [
-      "es5", "dom"
+      "es2022", "dom"
     ],
-    "moduleResolution": "node",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "outDir": "./dist",
     "rootDir": "./src",
     "removeComments": true,
@@ -16,5 +17,5 @@
     ]
   },
   "include": ["./src/**/*"],
-  "exclude": ["dist", "node_modules", "src/test"]
+  "exclude": ["dist", "node_modules"]
 }
