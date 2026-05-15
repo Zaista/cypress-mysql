@@ -4,3 +4,4 @@ node_modules/
 src/
 docker-compose.yaml
 tsconfig.json
+dist/test/
