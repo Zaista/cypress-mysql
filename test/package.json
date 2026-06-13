@@ -6,7 +6,7 @@
     "test": "cypress run"
   },
   "devDependencies": {
-    "cypress-mysql": "cypress-mysql:2.1.0-rc1",
+    "cypress-mysql": "cypress-mysql:2.1.1-rc.0",
     "typescript": "6.0.3"
   },
   "peerDependencies": {
