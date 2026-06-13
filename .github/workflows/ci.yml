@@ -14,12 +14,10 @@ jobs:
         with:
           node-version: 24
 
-      - working-directory: .
-        run: npm i
-      - working-directory: .
-        run: npm run build
       - name: Run tests
         run: |
+          npm i
+          npm run build
           cd test
           npm i
           npm run test
