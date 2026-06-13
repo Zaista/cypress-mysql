@@ -1,2 +1,2 @@
-import { addCommands } from '../../../dist/commands.js';
+import { addCommands } from 'cypress-mysql/dist/commands';
 addCommands();
