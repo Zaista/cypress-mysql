@@ -28,7 +28,9 @@
   },
   "files": [
     "dist/index.js",
-    "dist/index.d.ts"
+    "dist/index.d.ts",
+    "dist/commands.js",
+    "dist/commands.d.ts"
   ],
   "dependencies": {
     "mysql2": "3.22.3"

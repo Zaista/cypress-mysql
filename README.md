@@ -40,7 +40,7 @@ Supported commands:
 Add the following `env` properties in your `cypress.confing.js` file:
 
 ```javascript
-  env: {
+expose: {
     db: {
       host: 'localhost',
       user: 'user',
@@ -59,7 +59,7 @@ const mysql = require('cypress-mysql');
 
 module.exports = defineConfig({
   e2e: {
-    env: {
+    expose: {
       db: {
         host: 'localhost',
         user: 'cypress',
@@ -77,7 +77,7 @@ module.exports = defineConfig({
 In your `cypress/support/e2e.js` add the following:
 
 ```javascript
-const mysql = require('cypress-mysql');
+const mysql = require('cypress-mysql/dist/commands');
 mysql.addCommands();
 ```
 
@@ -86,11 +86,11 @@ mysql.addCommands();
 In your `cypress.config.ts` add the following:
 
 ```typescript
-import * as mysql from 'cypress-mysql';
+import { configurePlugin } from 'cypress-mysql';
 
 const defineConfig({
     e2e: {
-        env: {
+        expose: {
             db: {
                 host: 'localhost',
                 user: 'cypress',
@@ -99,7 +99,7 @@ const defineConfig({
             },
         },
         setupNodeEvents(on, config) {
-            mysql.configurePlugin(on);
+            configurePlugin(on);
         },
     },
 )}
@@ -108,8 +108,8 @@ const defineConfig({
 In your `cypress/support/e2e.ts` add the following:
 
 ```typescript
-import * as mysql from 'cypress-mysql';
-mysql.addCommands();
+import { addCommands } from 'cypress-mysql/dist/commands';
+addCommands();
 ```
 
 # Future development & support
