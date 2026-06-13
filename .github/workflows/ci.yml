@@ -19,5 +19,7 @@ jobs:
       - working-directory: .
         run: npm run build
       - name: Run tests
-        working-directory: ./test
-        run: npm run test
+        run: |
+          cd test
+          npm i
+          npm run test
