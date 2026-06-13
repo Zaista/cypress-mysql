@@ -1,5 +1,5 @@
 import { defineConfig } from 'cypress'
-import { configurePlugin } from 'cypress-mysql';
+import { configurePlugin } from '../dist/index.js';
 
 export default defineConfig({
   allowCypressEnv: false,
