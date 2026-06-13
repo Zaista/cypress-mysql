@@ -1,5 +1,6 @@
 import Chainable = Cypress.Chainable;
 import { ConnectionOptions } from 'mysql2';
+import { MySQLDetails } from './index';
 
 declare global {
   namespace Cypress {
