@@ -6,15 +6,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Git checkout
+      - name: git checkout
         uses: actions/checkout@v5
 
-      - name: Use Node.js 24
+      - name: setup node.js 24
         uses: actions/setup-node@v6
         with:
           node-version: 24
 
-      - name: Use Mysql 8.4
+      - name: setup mysql 8.4
         uses: shogo82148/actions-setup-mysql@v1
         with:
           mysql-version: "8.4"
@@ -28,7 +28,11 @@ jobs:
             max_connections=50
             local_infile=1
 
-      - name: Run tests
+      - name: create cypress db
+        run: |
+          mysql -uroot -e 'CREATE DATABASE IF NOT EXISTS cypress;'
+
+      - name: run tests
         run: |
           npm i
           npm run build
