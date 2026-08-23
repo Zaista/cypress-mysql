@@ -14,23 +14,12 @@ jobs:
         with:
           node-version: 24
 
-      - name: setup mysql 8.4
-        uses: shogo82148/actions-setup-mysql@v1
+      - name: setup mysql
+        uses: mirromutth/mysql-action@v1.1
         with:
-          mysql-version: "8.4"
-          root-password: root
-          user: cypress
-          password: cypress
-          my-cnf: |
-            innodb_log_file_size=256MB
-            innodb_buffer_pool_size=512MB
-            max_allowed_packet=16MB
-            max_connections=50
-            local_infile=1
-
-      - name: create cypress db
-        run: |
-          mysql -uroot -e 'CREATE DATABASE IF NOT EXISTS cypress;'
+          mysql database: 'cypress'
+          mysql user: 'cypress'
+          mysql password: 'cypress'
 
       - name: run tests
         run: |
