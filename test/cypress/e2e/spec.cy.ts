@@ -1,6 +1,5 @@
 describe('run cypress-mysql in cypress project', () => {
   before(() => {
-    cy.query('create database cypress')
     cy.query('drop table if exists query')
     cy.query('create table query (int_column INT, str_column VARCHAR(20))')
     cy.query('insert into query (int_column, str_column) values ?',
