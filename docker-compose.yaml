@@ -4,6 +4,7 @@ services:
     image: mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: cypress
       MYSQL_USER: cypress
       MYSQL_PASSWORD: cypress
     volumes:
