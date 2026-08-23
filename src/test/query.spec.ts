@@ -25,11 +25,17 @@ describe('Query tests', () => {
     );
 
     const drop_table_sql = 'drop table if exists query';
-    await execute_query({ db: default_args.db, sql: drop_table_sql });
+    await execute_query({
+      db: default_args.db,
+      sql: drop_table_sql,
+    });
 
     const create_table_sql =
       'create table query (int_column INT, str_column VARCHAR(20))';
-    await execute_query({ db: default_args.db, sql: create_table_sql });
+    await execute_query({
+      db: default_args.db,
+      sql: create_table_sql,
+    });
 
     const insert_sql = 'insert into query (int_column, str_column) values ?';
     const values = [
@@ -37,11 +43,12 @@ describe('Query tests', () => {
       [2, 'two'],
       [3, 'three'],
     ];
-    await execute_query({
+    const result = await execute_query({
       db: default_args.db,
       sql: insert_sql,
       values: [values],
     });
+    assert.match(result.info, /Records: 3/);
 
     const drop_join_table_sql = 'drop table if exists join_table';
     await execute_query({ db: default_args.db, sql: drop_join_table_sql });
