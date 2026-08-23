@@ -1,0 +1,30 @@
+name: Run cypress tests
+
+on: [pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: git checkout
+        uses: actions/checkout@v5
+
+      - name: setup node.js 24
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+
+      - name: setup mysql
+        uses: mirromutth/mysql-action@v1.1
+        with:
+          mysql database: 'cypress'
+          mysql user: 'cypress'
+          mysql password: 'cypress'
+
+      - name: run tests
+        run: |
+          npm i
+          npm run build
+          cd test
+          npm i
+          npm run test

@@ -12,7 +12,7 @@ const default_args: MySQLDetails = {
 };
 
 describe('Query tests', () => {
-  before(async () => {
+  it('Fail creating database that already exits', async () => {
     const create_db_sql = 'create database cypress';
     await execute_query({ db: default_args.db, sql: create_db_sql }).catch(
       (err: any) => {
@@ -23,47 +23,46 @@ describe('Query tests', () => {
         }
       },
     );
+  });
 
+  it('Drop database', async () => {
     const drop_table_sql = 'drop table if exists query';
-    await execute_query({ db: default_args.db, sql: drop_table_sql });
+    await execute_query({
+      db: default_args.db,
+      sql: drop_table_sql,
+    });
+  });
 
+  it('Create table', async () => {
     const create_table_sql =
       'create table query (int_column INT, str_column VARCHAR(20))';
-    await execute_query({ db: default_args.db, sql: create_table_sql });
+    await execute_query({
+      db: default_args.db,
+      sql: create_table_sql,
+    });
+  });
 
+  it('Insert data', async () => {
     const insert_sql = 'insert into query (int_column, str_column) values ?';
     const values = [
       [1, 'one'],
       [2, 'two'],
       [3, 'three'],
     ];
-    await execute_query({
+    const result = await execute_query({
       db: default_args.db,
       sql: insert_sql,
       values: [values],
     });
-
-    const drop_join_table_sql = 'drop table if exists join_table';
-    await execute_query({ db: default_args.db, sql: drop_join_table_sql });
-
-    const create_join_table_sql =
-      'create table join_table (int_column INT, str_column VARCHAR(20))';
-    await execute_query({ db: default_args.db, sql: create_join_table_sql });
-
-    const join_insert_sql =
-      'insert into join_table (int_column, str_column) values ?';
-    const join_values = [
-      [1, 'join on one'],
-      [2, 'join on two'],
-    ];
-    await execute_query({
-      db: default_args.db,
-      sql: join_insert_sql,
-      values: [join_values],
-    });
+    assert.match(result.info, /Records: 3/);
   });
 
-  it('Should fail with missing user error', async () => {
+  it('Drop table', async () => {
+    const drop_join_table_sql = 'drop table if exists join_table';
+    await execute_query({ db: default_args.db, sql: drop_join_table_sql });
+  });
+
+  it('Fail with missing user error', async () => {
     const args = {
       db: {
         host: 'localhost',
@@ -82,7 +81,7 @@ describe('Query tests', () => {
       });
   });
 
-  it('Should fail with missing password error', async () => {
+  it('Fail with missing password error', async () => {
     const args = {
       db: {
         host: 'localhost',
@@ -101,7 +100,7 @@ describe('Query tests', () => {
       });
   });
 
-  it('Should fail with missing database error', async () => {
+  it('Fail with missing database error', async () => {
     const args = {
       db: {
         host: 'localhost',
@@ -120,7 +119,7 @@ describe('Query tests', () => {
       });
   });
 
-  it('Should select', async () => {
+  it('Select', async () => {
     const result = [
       { int_column: 1, str_column: 'one' },
       {
@@ -134,7 +133,7 @@ describe('Query tests', () => {
     });
   });
 
-  it('Should select and order desc', async () => {
+  it('Select and order desc', async () => {
     const result = [
       { int_column: 3, str_column: 'three' },
       {
@@ -149,7 +148,7 @@ describe('Query tests', () => {
     });
   });
 
-  it('Should select and limit', async () => {
+  it('Select and limit', async () => {
     const result = [
       { int_column: 1, str_column: 'one' },
       {
@@ -163,7 +162,7 @@ describe('Query tests', () => {
     });
   });
 
-  it('Should select where', async () => {
+  it('Select where', async () => {
     const result = [{ str_column: 'two' }];
     const sql = 'select str_column from query where int_column = 2';
     await execute_query({ db: default_args.db, sql }).then((res: any) => {
@@ -171,7 +170,7 @@ describe('Query tests', () => {
     });
   });
 
-  it('Should select where like', async () => {
+  it('Select where like', async () => {
     const result = [{ int_column: 3 }];
     const sql = 'select int_column from query where str_column like "%hree%"';
     await execute_query({ db: default_args.db, sql }).then((res: any) => {
@@ -179,7 +178,7 @@ describe('Query tests', () => {
     });
   });
 
-  it('Should insert single', async () => {
+  it('Insert single', async () => {
     const sql =
       'insert into query (int_column, str_column) values (13, "new insert")';
     await execute_query({ db: default_args.db, sql }).then((res: any) => {
@@ -187,7 +186,7 @@ describe('Query tests', () => {
     });
   });
 
-  it('Should update single', async () => {
+  it('Update single', async () => {
     const sql =
       'update query set str_column = "updated insert" where int_column = 13';
     await execute_query({ db: default_args.db, sql }).then((res: any) => {
@@ -201,7 +200,7 @@ describe('Query tests', () => {
     );
   });
 
-  it('Should insert multiple', async () => {
+  it('Insert multiple', async () => {
     const sql = 'insert into query (int_column, str_column) values ?';
     const values = [
       [
@@ -219,7 +218,7 @@ describe('Query tests', () => {
     });
   });
 
-  it('Should delete single and afterwards select nothing', async () => {
+  it('Delete single and afterwards select nothing', async () => {
     const sql = 'delete from query where int_column = 13';
     await execute_query({ db: default_args.db, sql }).then((res: any) => {
       assert.strictEqual(res.affectedRows, 1);
@@ -232,7 +231,22 @@ describe('Query tests', () => {
     );
   });
 
-  it('Should join', async () => {
+  it('Join', async () => {
+    const create_join_table_sql =
+      'create table join_table (int_column INT, str_column VARCHAR(20))';
+    await execute_query({ db: default_args.db, sql: create_join_table_sql });
+
+    const join_insert_sql =
+      'insert into join_table (int_column, str_column) values ?';
+    const join_values = [
+      [1, 'join on one'],
+      [2, 'join on two'],
+    ];
+    await execute_query({
+      db: default_args.db,
+      sql: join_insert_sql,
+      values: [join_values],
+    });
     const result = [
       { int_column: 1, a: 'one', b: 'join on one' },
       {
