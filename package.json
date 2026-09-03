@@ -33,7 +33,7 @@
     "dist/commands.d.ts"
   ],
   "dependencies": {
-    "mysql2": "3.22.3"
+    "mysql2": "3.23.1"
   },
   "peerDependencies": {
     "cypress": ">=15"
